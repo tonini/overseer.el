@@ -70,7 +70,7 @@
   "Set the default-directory to the emacs lisp package project root."
   (let ((project-root (overseer-project-root)))
     (if (not project-root)
-        (error "Couldn't find any project root")
+        (error "Couldn't find any emacs lisp project root.")
       (setq default-directory project-root))))
 
 (defvar overseer--buffer-name nil
