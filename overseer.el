@@ -87,12 +87,12 @@
     (when orphan-proc
       (kill-process orphan-proc))))
 
-(define-compilation-mode overseer-buffer-mode "overseer"
+(define-compilation-mode overseer-buffer-mode "ert-runner"
   "overseer compilation mode."
   (progn
     (font-lock-add-keywords nil
                             '(("^Finished in .*$" . font-lock-string-face)
-                              ("^overseer.*$" . font-lock-string-face)))
+                              ("^ert-runner.*$" . font-lock-string-face)))
     ;; Set any bound buffer name buffer-locally
     (setq overseer--buffer-name overseer--buffer-name)
     (set (make-local-variable 'kill-buffer-hook)
@@ -102,14 +102,8 @@
   (lambda ()
     (not (string= (substring (buffer-name) 0 1) "*"))))
 
-(defun overseer--handle-compilation-once ()
-  (delete-matching-lines "\\(-*- mode:\\|^$\\)" (point-min) (point)))
-
 (defun overseer--handle-compilation ()
   (ansi-color-apply-on-region (point-min) (point-max)))
-
-(defun overseer--remove-dispensable-output-after-finish (buffer msg)
-  (delete-matching-lines "\\(overseer started\\|overseer finished\\)" (point-min) (point-max)))
 
 (defun overseer--handle-compilation ()
   (ansi-color-apply-on-region (point-min) (point-max)))
@@ -128,9 +122,7 @@ Argument BUFFER-NAME for the compilation."
       (setq-local compilation-error-regexp-alist-alist
                   (cons overseer--error-link-options compilation-error-regexp-alist-alist))
       (setq-local compilation-error-regexp-alist (cons 'overseer compilation-error-regexp-alist))
-      (add-hook 'compilation-filter-hook 'overseer--handle-compilation nil t)
-      (add-hook 'compilation-filter-hook 'overseer--handle-compilation-once nil t)
-      (add-to-list 'compilation-finish-functions 'overseer--remove-dispensable-output-after-finish))))
+      (add-hook 'compilation-filter-hook 'overseer--handle-compilation nil t))))
 
 (defun overseer--current-buffer-test-file-p ()
   (string-match-p "-test\.el$"
@@ -142,11 +134,10 @@ Argument BUFFER-NAME for the compilation."
 
 (defun overseer-test-this-buffer ()
   (interactive)
-  (let ((filename (buffer-file-name)))
-    (if (overseer--current-buffer-test-file-p)
-        (overseer-execute (list filename))        
-      (message (format "%s is no test file."
-                       (file-name-nondirectory filename))))))
+  (if (overseer--current-buffer-test-file-p)
+      (overseer-execute (list (buffer-file-name)))        
+    (message (format "%s is no test file."
+                     (file-name-nondirectory (buffer-file-name))))))
 
 (defun overseer-test-debug ()
   (interactive)
