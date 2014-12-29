@@ -1,26 +1,26 @@
 (require 'f)
 
-(defvar ert-runner-mode-test/test-path
+(defvar overseer-test/test-path
   (f-parent (f-this-file)))
 
-(defvar ert-runner-mode-test/root-path
-  (f-parent ert-runner-mode-test/test-path))
+(defvar overseer-test/root-path
+  (f-parent overseer-test/test-path))
 
-(defvar ert-runner-mode-test-path
+(defvar overseer-test-path
   (f-dirname (f-this-file)))
 
-(defvar ert-runner-mode-sandbox-path
-  (f-expand "sandbox" ert-runner-mode-test-path))
+(defvar overseer-sandbox-path
+  (f-expand "sandbox" overseer-test-path))
 
 (defmacro within-sandbox (&optional current &rest body)
   "Evaluate BODY in an empty sandbox directory."
   `(let ((default-directory
-           (f-join ert-runner-mode-sandbox-path (format "%s" ,current))))
-     (f-mkdir ert-runner-mode-sandbox-path)
+           (f-join overseer-sandbox-path (format "%s" ,current))))
+     (f-mkdir overseer-sandbox-path)
      ,@body
-     (f-delete ert-runner-mode-sandbox-path :force)))
+     (f-delete overseer-sandbox-path :force)))
 
-(require 'ert-runner-mode (f-expand "ert-runner-mode" ert-runner-mode-test/root-path))
+(require 'overseer (f-expand "overseer" overseer-test/root-path))
 (require 'ert)
 
 (provide 'test-helper)

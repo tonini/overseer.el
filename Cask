@@ -1,7 +1,7 @@
 (source gnu)
 (source melpa)
 
-(package-file "ert-runner-mode.el")
+(package-file "overseer.el")
 
 (development
  (depends-on "f")
