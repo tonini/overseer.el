@@ -96,7 +96,7 @@
   (ansi-color-apply-on-region (point-min) (point-max)))
 
 (defun overseer--remove-dispensable-output-after-finish (buffer msg)
-  (delete-matching-lines "\\(overseer started\\|overseer finished\\|cask exec ert-runner\\)" (point-min) (point-max)))
+  (delete-matching-lines "\\(overseer started\\|overseer finished\\)" (point-min) (point-max)))
 
 (defun overseer--handle-compilation ()
   (ansi-color-apply-on-region (point-min) (point-max)))
