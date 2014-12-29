@@ -149,6 +149,12 @@ Argument BUFFER-NAME for the compilation."
   (interactive)
   (overseer-execute '("--quiet")))
 
+(defun overseer-prompt (command)
+  ""
+  (interactive "Mert-runner: ")
+  (message command)
+  (overseer-execute (list command)))
+
 (defun overseer-execute (cmdlist)
   "Run a karma command."
   (let ((old-directory default-directory))
