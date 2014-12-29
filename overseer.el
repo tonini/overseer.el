@@ -90,9 +90,7 @@
     (not (string= (substring (buffer-name) 0 1) "*"))))
 
 (defun overseer--handle-compilation-once ()
-  (remove-hook 'compilation-filter-hook 'overseer--handle-compilation-once t)
-  (delete-matching-lines "\\(-*- mode:\\|^$\\|overseer started\\|overseer-buffer\\)"
-                         (point-min) (point)))
+  (delete-matching-lines "\\(-*- mode:\\|^$\\)" (point-min) (point)))
 
 (defun overseer--handle-compilation ()
   (ansi-color-apply-on-region (point-min) (point-max)))
