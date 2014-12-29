@@ -39,6 +39,19 @@
 (defvar overseer-buffer-name "*overseer*"
   "")
 
+(defun overseer--flatten (alist)
+  (cond ((null alist) nil)
+        ((atom alist) (list alist))
+        (t (append (overseer--flatten (car alist))
+                   (overseer--flatten (cdr alist))))))
+
+(defun overseer--build-runner-cmdlist (command)
+  "Build the commands list for the runner."
+  (remove "" (overseer--flatten
+              (list (if (stringp command)
+                        (split-string command)
+                      command)))))
+
 (defvar overseer--project-root-indicators
   '("Cask")
   "list of file-/directory-names which indicate a root of a emacs lisp project")
@@ -118,20 +131,6 @@ Argument BUFFER-NAME for the compilation."
       (add-hook 'compilation-filter-hook 'overseer--handle-compilation nil t)
       (add-hook 'compilation-filter-hook 'overseer--handle-compilation-once nil t)
       (add-to-list 'compilation-finish-functions 'overseer--remove-dispensable-output-after-finish))))
-
-(defun overseer--flatten (alist)
-  (cond ((null alist) nil)
-        ((atom alist) (list alist))
-        (t (append (overseer--flatten (car alist))
-                   (overseer--flatten (cdr alist))))))
-
-
-(defun overseer--build-runner-cmdlist (command)
-  "Build the commands list for the runner."
-  (remove "" (overseer--flatten
-              (list (if (stringp command)
-                        (split-string command)
-                      command)))))
 
 (defun overseer-run ()
   (interactive)
