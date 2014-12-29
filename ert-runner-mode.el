@@ -1,4 +1,4 @@
-;;; ert.el --- ert-runner emacs integration
+;;; ert-runner-mode.el --- ert-runner emacs integration
 
 ;; Copyright © 2014 Samuel Tonini
 ;;
@@ -31,6 +31,6 @@
 ;;; Code:
 
 
-(provide 'ert)
+(provide 'ert-runner-mode)
 
-;;; ert.el ends here
+;;; ert-runner-mode.el ends here

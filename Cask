@@ -1,7 +1,7 @@
 (source gnu)
 (source melpa)
 
-(package-file "ert.el")
+(package-file "ert-runner-mode")
 
 (development
  (depends-on "f")
