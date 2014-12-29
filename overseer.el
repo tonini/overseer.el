@@ -36,6 +36,9 @@
 (defvar overseer-command "cask exec ert-runner"
   "")
 
+(defvar overseer-buffer-name "*overseer*"
+  "")
+
 (defvar overseer--project-root-indicators
   '("Cask")
   "list of file-/directory-names which indicate a root of a emacs lisp project")
@@ -88,8 +91,14 @@
 
 (defun overseer--handle-compilation-once ()
   (remove-hook 'compilation-filter-hook 'overseer--handle-compilation-once t)
-  (delete-matching-lines "\\(-*- mode:\\|^$\\|karma run\\|Loading config\\|--no-single-run\\|Karma finished\\|Karma started\\|karma-compilation;\\)"
+  (delete-matching-lines "\\(-*- mode:\\|^$\\|overseer started\\|overseer-buffer\\)"
                          (point-min) (point)))
+
+(defun overseer--handle-compilation ()
+  (ansi-color-apply-on-region (point-min) (point-max)))
+
+(defun overseer--remove-dispensable-output-after-finish (buffer msg)
+  (delete-matching-lines "\\(overseer started\\|overseer finished\\|cask exec ert-runner\\)" (point-min) (point-max)))
 
 (defun overseer--handle-compilation ()
   (ansi-color-apply-on-region (point-min) (point-max)))
@@ -109,7 +118,8 @@ Argument BUFFER-NAME for the compilation."
                   (cons overseer--error-link-options compilation-error-regexp-alist-alist))
       (setq-local compilation-error-regexp-alist (cons 'overseer compilation-error-regexp-alist))
       (add-hook 'compilation-filter-hook 'overseer--handle-compilation nil t)
-      (add-hook 'compilation-filter-hook 'overseer--handle-compilation-once nil t))))
+      (add-hook 'compilation-filter-hook 'overseer--handle-compilation-once nil t)
+      (add-to-list 'compilation-finish-functions 'overseer--remove-dispensable-output-after-finish))))
 
 (defun overseer--flatten (alist)
   (cond ((null alist) nil)
@@ -127,18 +137,28 @@ Argument BUFFER-NAME for the compilation."
 
 (defun overseer-run ()
   (interactive)
-  (overseer-execute (list "")
-                 "*overseer*"))
+  (overseer-execute '("")))
 
-(defun overseer-execute (cmdlist buffer-name)
+(defun overseer-run-debug ()
+  (interactive)
+  (overseer-execute '("--debug")))
+
+(defun overseer-run-verbose ()
+  (interactive)
+  (overseer-execute '("--verbose")))
+
+(defun overseer-run-quiet ()
+  (interactive)
+  (overseer-execute '("--quiet")))
+
+(defun overseer-execute (cmdlist)
   "Run a karma command."
   (let ((old-directory default-directory))
     (overseer--establish-root-directory)
     (cd default-directory)
     (overseer-compilation-run (overseer--build-runner-cmdlist (list overseer-command cmdlist))
-                           buffer-name)
+                              overseer-buffer-name)
     (cd old-directory)))
-
 
 ;;;###autoload
 (defun overseer-version (&optional show-version)

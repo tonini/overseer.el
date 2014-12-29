@@ -1,10 +1,10 @@
 (require 'f)
 
-(defvar overseer-test/test-path
+(defvar overseer-test-path
   (f-parent (f-this-file)))
 
-(defvar overseer-test/root-path
-  (f-parent overseer-test/test-path))
+(defvar overseer-root-path
+  (f-parent overseer-test-path))
 
 (defvar overseer-test-path
   (f-dirname (f-this-file)))
@@ -20,7 +20,7 @@
      ,@body
      (f-delete overseer-sandbox-path :force)))
 
-(require 'overseer (f-expand "overseer" overseer-test/root-path))
+(require 'overseer (f-expand "overseer" overseer-root-path))
 (require 'ert)
 
 (provide 'test-helper)
