@@ -132,23 +132,35 @@ Argument BUFFER-NAME for the compilation."
       (add-hook 'compilation-filter-hook 'overseer--handle-compilation-once nil t)
       (add-to-list 'compilation-finish-functions 'overseer--remove-dispensable-output-after-finish))))
 
-(defun overseer-run ()
-  (interactive)
-  (overseer-execute '("")))
+(defun overseer--current-buffer-test-file-p ()
+  (string-match-p "-test\.el$"
+                  (file-name-nondirectory (buffer-file-name))))
 
-(defun overseer-run-debug ()
+(defun overseer-test ()
+  (interactive)
+  (overseer-execute '()))
+
+(defun overseer-test-this-buffer ()
+  (interactive)
+  (let ((filename (buffer-file-name)))
+    (if (overseer--current-buffer-test-file-p)
+        (overseer-execute (list filename))        
+      (message (format "%s is no test file."
+                       (file-name-nondirectory filename))))))
+
+(defun overseer-test-debug ()
   (interactive)
   (overseer-execute '("--debug")))
 
-(defun overseer-run-verbose ()
+(defun overseer-test-verbose ()
   (interactive)
   (overseer-execute '("--verbose")))
 
-(defun overseer-run-quiet ()
+(defun overseer-test-quiet ()
   (interactive)
   (overseer-execute '("--quiet")))
 
-(defun overseer-prompt (command)
+(defun overseer-test-prompt (command)
   ""
   (interactive "Mert-runner: ")
   (message command)
