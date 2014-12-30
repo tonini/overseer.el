@@ -120,9 +120,9 @@ Argument BUFFER-NAME for the compilation."
         (compilation-start (mapconcat 'concat cmdlist " ")
                            'overseer-buffer-mode
                            (lambda (b) overseer--buffer-name))
-      (setq-local compilation-error-regexp-alist-alist
-                  (cons overseer--error-link-options compilation-error-regexp-alist-alist))
-      (setq-local compilation-error-regexp-alist (cons 'overseer compilation-error-regexp-alist))
+      (set (make-local-variable 'compilation-error-regexp-alist-alist)
+           (cons overseer--error-link-options compilation-error-regexp-alist-alist)) 
+      (set (make-local-variable 'compilation-error-regexp-alist) (cons 'overseer compilation-error-regexp-alist)) 
       (add-hook 'compilation-filter-hook 'overseer--handle-ansi-color nil t))))
 
 (defun overseer--current-buffer-test-file-p ()
