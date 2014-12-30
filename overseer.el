@@ -51,6 +51,7 @@
   "list of file-/directory-names which indicate a root of a emacs lisp project")
 
 (defun overseer-project-root ()
+  "Return path to the current emacs lisp package root directory."
   (let ((file (file-name-as-directory (expand-file-name default-directory))))
     (overseer--project-root-identifier file overseer--project-root-indicators)))
 
@@ -96,10 +97,7 @@
   (lambda ()
     (not (string= (substring (buffer-name) 0 1) "*"))))
 
-(defun overseer--handle-compilation ()
-  (ansi-color-apply-on-region (point-min) (point-max)))
-
-(defun overseer--handle-compilation ()
+(defun overseer--handle-ansi-color ()
   (ansi-color-apply-on-region (point-min) (point-max)))
 
 (defun overseer-compilation-run (cmdlist buffer-name)
@@ -116,17 +114,24 @@ Argument BUFFER-NAME for the compilation."
       (setq-local compilation-error-regexp-alist-alist
                   (cons overseer--error-link-options compilation-error-regexp-alist-alist))
       (setq-local compilation-error-regexp-alist (cons 'overseer compilation-error-regexp-alist))
-      (add-hook 'compilation-filter-hook 'overseer--handle-compilation nil t))))
+      (add-hook 'compilation-filter-hook 'overseer--handle-ansi-color nil t))))
 
 (defun overseer--current-buffer-test-file-p ()
   (string-match-p "-test\.el$"
                   (file-name-nondirectory (buffer-file-name))))
 
 (defun overseer-test ()
+  "Run ert-runner."
   (interactive)
   (overseer-execute '()))
 
+(defun overseer-help ()
+  "Run ert-runner with --help as argument."
+  (interactive)
+  (overseer-execute '("--help")))
+
 (defun overseer-test-this-buffer ()
+  "Run ert-runner with the current `buffer-file-name' as argument."
   (interactive)
   (if (overseer--current-buffer-test-file-p)
       (overseer-execute (list (buffer-file-name)))        
@@ -134,19 +139,22 @@ Argument BUFFER-NAME for the compilation."
                      (file-name-nondirectory (buffer-file-name))))))
 
 (defun overseer-test-debug ()
+  "Run ert-runner with --debug as argument."
   (interactive)
   (overseer-execute '("--debug")))
 
 (defun overseer-test-verbose ()
+  "Run ert-runner with --verbose as argument."
   (interactive)
   (overseer-execute '("--verbose")))
 
 (defun overseer-test-quiet ()
+  "Run ert-runner with --quiet as argument."
   (interactive)
   (overseer-execute '("--quiet")))
 
 (defun overseer-test-prompt (command)
-  ""
+  "Run ert-runner with custom arguments."
   (interactive "Mert-runner: ")
   (message command)
   (overseer-execute (list command)))
