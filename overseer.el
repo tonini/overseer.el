@@ -1,4 +1,4 @@
-;;; overseer.el --- ert-runner emacs integration
+;;; overseer.el --- Ert-runner Integration Into Emacs.
 
 ;; Copyright © 2014 Samuel Tonini
 ;;
@@ -26,7 +26,7 @@
 
 ;;; Commentary:
 
-;;  ert-runner emacs integration
+;;  Ert-runner Integration Into Emacs
 
 ;;; Code:
 
