@@ -9,7 +9,7 @@
   - [Via el-get](#via-el-get)
   - [Manual](#manual)
 - [Usage](#usage)
-  - [Interactice commands](#interactive-commands)
+  - [Interactive commands](#interactive-commands)
 - [Contributing](#contributing)
 - [License](#license)
 
