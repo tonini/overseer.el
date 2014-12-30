@@ -177,6 +177,25 @@ Argument BUFFER-NAME for the compilation."
                               overseer-buffer-name)
     (cd old-directory)))
 
+;;;###autoload
+(defun overseer-version (&optional show-version)
+  "Get the Overseer version as string.
+
+If called interactively or if SHOW-VERSION is non-nil, show the
+version in the echo area and the messages buffer.
+
+The returned string includes both, the version from package.el
+and the library version, if both a present and different.
+
+If the version number could not be determined, signal an error,
+if called interactively, or if SHOW-VERSION is non-nil, otherwise
+just return nil."
+  (interactive (list t))
+  (let ((version (pkg-info-version-info 'overseer)))
+    (when show-version
+      (message "Overseer version: %s" version))
+    version))
+
 (defun overseer-mode-hook ()
   "Hook which enables `overseer-mode'"
   (overseer-mode 1))
