@@ -2,6 +2,8 @@
 
 > Ert-runner Integration Into Emacs
 
+The [ert-runner](https://github.com/rejeep/ert-runner.el) is a great way to run your ert tests. Overseer integrates this tool into emacs and let's you using it inside your lovely editor.
+
 ***
 
 - [Installation](#installation)
