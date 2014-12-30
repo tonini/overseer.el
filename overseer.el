@@ -31,6 +31,8 @@
 ;;; Code:
 
 (require 'compile)
+(require 'dash)
+(require 'pkg-info)
 (require 'ansi-color)
 
 (defgroup overseer nil
