@@ -175,6 +175,33 @@ Argument BUFFER-NAME for the compilation."
                               overseer-buffer-name)
     (cd old-directory)))
 
+(defun overseer-mode-hook ()
+  "Hook which enables `overseer-mode'"
+  (overseer-mode 1))
+
+(defvar overseer-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "C-c , t") 'overseer-test)
+    (define-key map (kbd "C-c , b") 'overseer-test-this-buffer)
+    (define-key map (kbd "C-c , p") 'overseer-test-prompt)
+    (define-key map (kbd "C-c , h") 'overseer-help)
+    map)
+  "The keymap used when `overseer-mode' is active.")
+
+;;;###autoload
+(define-minor-mode overseer-mode
+  "Minor mode for emacs lisp files to test through ert-runner.
+
+Key bindings:
+\\{overseer-mode-map}"
+  nil
+  " overseer"
+  :group 'overseer
+  :global nil
+  :keymap 'overseer-mode-map)
+
+(add-hook 'emacs-lisp-mode-hook 'overseer-mode-hook)
+
 (provide 'overseer)
 
 ;;; overseer.el ends here
