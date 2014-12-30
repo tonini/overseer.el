@@ -160,7 +160,7 @@ Argument BUFFER-NAME for the compilation."
   (overseer-execute (list command)))
 
 (defun overseer-execute (cmdlist)
-  "Run a karma command."
+  "Execute an ert-runner with CMDLIST as arguments."
   (let ((old-directory default-directory))
     (overseer--establish-root-directory)
     (cd default-directory)
