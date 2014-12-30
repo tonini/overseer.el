@@ -33,6 +33,13 @@
 (require 'compile)
 (require 'ansi-color)
 
+(defgroup overseer nil
+  "Ert-runner Integration Into Emacs."
+  :prefix "overseer-"
+  :group 'applications
+  :link '(url-link :tag "Github" "https://github.com/tonini/overseer.el")
+  :link '(emacs-commentary-link :tag "Commentary" "overseer"))
+
 (defvar overseer-command "cask exec ert-runner"
   "The shell command for ert-runner.")
 
