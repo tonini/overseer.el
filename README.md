@@ -74,7 +74,7 @@ The `ert-runner` will always run in the context of the current `emacs lisp proje
 
 ### Interactive Commands
 
-If you wan't to use the following keybindings in the `emacs-lisp-mode`, you need to enable the `overseer-mode` via `hook`:
+To use the `overseer-mode` minor mode and enable the following keybindings, you need to load the `overseer-mode` via `hook`:
 
 ```el
 (add-hook 'emacs-lisp-mode-hook 'overseer-mode-hook)
