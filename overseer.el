@@ -6,7 +6,7 @@
 
 ;; URL: http://www.github.com/tonini/overseer.el
 ;; Version: 0.1.0
-;; Package-Requires: ((emacs "24") (pkg-info "0.4"))
+;; Package-Requires: ((emacs "24") (dash "2.10.0") (pkg-info "0.4"))
 ;; Keywords:
 
 ;; This file is not part of GNU Emacs.
@@ -34,20 +34,14 @@
 (require 'ansi-color)
 
 (defvar overseer-command "cask exec ert-runner"
-  "")
+  "The shell command for ert-runner.")
 
 (defvar overseer-buffer-name "*overseer*"
-  "")
-
-(defun overseer--flatten (alist)
-  (cond ((null alist) nil)
-        ((atom alist) (list alist))
-        (t (append (overseer--flatten (car alist))
-                   (overseer--flatten (cdr alist))))))
+  "Name of the overseer buffer.")
 
 (defun overseer--build-runner-cmdlist (command)
   "Build the commands list for the runner."
-  (remove "" (overseer--flatten
+  (remove "" (-flatten
               (list (if (stringp command)
                         (split-string command)
                       command)))))
