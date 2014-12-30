@@ -162,10 +162,14 @@ Argument BUFFER-NAME for the compilation."
   (interactive)
   (overseer-execute '("--quiet")))
 
+(defun overseer-test-tags (tags)
+  "Run ert-runner for the given TAGS."
+  (interactive "Mert-runner -t: ")
+  (overseer-execute (list "-t" tags)))
+
 (defun overseer-test-prompt (command)
   "Run ert-runner with custom arguments."
   (interactive "Mert-runner: ")
-  (message command)
   (overseer-execute (list command)))
 
 (defun overseer-execute (cmdlist)
@@ -201,6 +205,7 @@ just return nil."
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "C-c , t") 'overseer-test)
     (define-key map (kbd "C-c , b") 'overseer-test-this-buffer)
+    (define-key map (kbd "C-c , g") 'overseer-test-tags)
     (define-key map (kbd "C-c , p") 'overseer-test-prompt)
     (define-key map (kbd "C-c , d") 'overseer-test-debug)
     (define-key map (kbd "C-c , q") 'overseer-test-quiet)
