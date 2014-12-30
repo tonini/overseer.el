@@ -224,8 +224,6 @@ Key bindings:
   :global nil
   :keymap 'overseer-mode-map)
 
-(add-hook 'emacs-lisp-mode-hook 'overseer-mode-hook)
-
 (provide 'overseer)
 
 ;;; overseer.el ends here
