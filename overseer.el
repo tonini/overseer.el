@@ -149,9 +149,6 @@ Argument BUFFER-NAME for the compilation."
 
 (defun overseer--test-file (filename)
   "Run ert-runner with the current FILENAME as argument."
-  (when (not (and (file-exists-p filename)
-                  (overseer--current-buffer-test-file-p)))
-    (error "The given file doesn't exists or is not test file."))
   (overseer-execute (list (expand-file-name filename))))
 
 (defun overseer-test-file (filename)
