@@ -81,10 +81,6 @@
   "Used to store compilation name so recompilation works as expected.")
 (make-variable-buffer-local 'overseer--buffer-name)
 
-(defvar overseer--error-link-options
-  '(overseer "\\([-A-Za-z0-9./_]+\\):\\([0-9]+\\)\\(: warning\\)?" 1 2 nil (3) 1)
-  "File link matcher for `compilation-error-regexp-alist-alist' (matches path/to/file:line).")
-
 (defun overseer--kill-any-orphan-proc ()
   "Ensure any dangling buffer process is killed."
   (let ((orphan-proc (get-buffer-process (buffer-name))))
@@ -119,9 +115,7 @@ Argument BUFFER-NAME for the compilation."
     (with-current-buffer
         (compilation-start (mapconcat 'concat cmdlist " ")
                            'overseer-buffer-mode
-                           (lambda (b) overseer--buffer-name))
-      (set (make-local-variable 'compilation-error-regexp-alist-alist)
-           (cons overseer--error-link-options compilation-error-regexp-alist-alist)) 
+                           (lambda (b) overseer--buffer-name)) 
       (set (make-local-variable 'compilation-error-regexp-alist) (cons 'overseer compilation-error-regexp-alist)) 
       (add-hook 'compilation-filter-hook 'overseer--handle-ansi-color nil t))))
 
