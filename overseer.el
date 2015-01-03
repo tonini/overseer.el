@@ -1,6 +1,6 @@
 ;;; overseer.el --- Ert-runner Integration Into Emacs.
 
-;; Copyright © 2014 Samuel Tonini
+;; Copyright © 2014-2015 Samuel Tonini
 ;;
 ;; Author: Samuel Tonini <tonini.samuel@gmail.com>
 
@@ -115,8 +115,8 @@ Argument BUFFER-NAME for the compilation."
     (with-current-buffer
         (compilation-start (mapconcat 'concat cmdlist " ")
                            'overseer-buffer-mode
-                           (lambda (b) overseer--buffer-name)) 
-      (set (make-local-variable 'compilation-error-regexp-alist) (cons 'overseer compilation-error-regexp-alist)) 
+                           (lambda (b) overseer--buffer-name))
+      (set (make-local-variable 'compilation-error-regexp-alist) (cons 'overseer compilation-error-regexp-alist))
       (add-hook 'compilation-filter-hook 'overseer--handle-ansi-color nil t))))
 
 (defun overseer--current-buffer-test-file-p ()
@@ -137,7 +137,7 @@ Argument BUFFER-NAME for the compilation."
   "Run ert-runner with the current `buffer-file-name' as argument."
   (interactive)
   (if (overseer--current-buffer-test-file-p)
-      (overseer-execute (list (buffer-file-name)))        
+      (overseer-execute (list (buffer-file-name)))
     (message (format "%s is no test file."
                      (file-name-nondirectory (buffer-file-name))))))
 
