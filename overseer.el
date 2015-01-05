@@ -66,16 +66,9 @@
 
 (defun overseer--project-root-identifier (file indicators)
   (let ((root-dir (if indicators (locate-dominating-file file (car indicators)) nil)))
-    (cond (root-dir (directory-file-name (expand-file-name root-dir)))
+    (cond (root-dir (f-slash (directory-file-name (expand-file-name root-dir))))
           (indicators (overseer--project-root-identifier file (cdr indicators)))
           (t nil))))
-
-(defun overseer--establish-root-directory ()
-  "Set the default-directory to the emacs lisp package project root."
-  (let ((project-root (overseer-project-root)))
-    (if (not project-root)
-        (error "Couldn't find any emacs lisp project root.")
-      (concat project-root "/"))))
 
 (defvar overseer--buffer-name nil
   "Used to store compilation name so recompilation works as expected.")
@@ -177,7 +170,7 @@ Argument BUFFER-NAME for the compilation."
 
 (defun overseer-execute (cmdlist)
   "Execute an ert-runner with CMDLIST as arguments."
-  (let ((default-directory (overseer--establish-root-directory)))
+  (let ((default-directory (overseer-project-root)))
     (overseer-compilation-run (overseer--build-runner-cmdlist (list overseer-command cmdlist))
                               overseer-buffer-name)))
 
