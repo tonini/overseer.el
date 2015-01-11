@@ -87,7 +87,7 @@ Keybinding           | Description
 ---------------------|---------------
 <kbd>C-c , t</kbd>   | Runs `cask exec ert-runner`. `overseer-test`
 <kbd>C-c , b</kbd>   | Runs `cask exec ert-runner` with the current buffer file as argument. `overseer-test-this-buffer`
-<kbd>C-c , g</kbd>   | Runs `cask exec ert-runner -t` with given tags (example: `indentation,syntax`). `overseer-test-this-buffer` 
+<kbd>C-c , g</kbd>   | Runs `cask exec ert-runner -t` with given tags (example: `indentation,syntax`). `overseer-test-this-buffer`
 <kbd>C-c , p</kbd>   | Open a prompt to run `cask exec ert-runner` with custom arguments. `overseer-test-prompt`
 <kbd>C-c , h</kbd>   | Runs `cask exec ert-runner --help`. `overseer-help`
 <kbd>C-c , d</kbd>   | Runs `cask exec ert-runner --debug`. `overseer-help`
@@ -106,7 +106,7 @@ Contributions are very welcome!
 
 ## License
 
-Copyright © 2014 Samuel Tonini and
+Copyright © 2014-2015 Samuel Tonini and
 [contributors](https://github.com/tonini/overseer.el/contributors).
 
 Distributed under the GNU General Public License, version 3
