@@ -212,7 +212,7 @@ just return nil."
     version))
 
 (defun overseer-mode-hook ()
-  "Hook which enables `overseer-mode'"
+  "Hook which enables `overseer-mode'."
   (overseer-mode 1))
 
 ;;;###autoload
