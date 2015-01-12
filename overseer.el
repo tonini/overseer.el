@@ -57,7 +57,7 @@
 
 (defvar overseer--project-root-indicators
   '("Cask")
-  "list of file-/directory-names which indicate a root of a emacs lisp project")
+  "Files which indicate a root of a emacs lisp package.")
 
 (defun overseer-project-root ()
   "Return path to the current emacs lisp package root directory."
@@ -81,7 +81,7 @@
       (kill-process orphan-proc))))
 
 (define-compilation-mode overseer-buffer-mode "ert-runner"
-  "overseer compilation mode."
+  "Overseer compilation mode."
   (progn
     (font-lock-add-keywords nil
                             '(("^Finished in .*$" . font-lock-string-face)
@@ -99,9 +99,7 @@
   (ansi-color-apply-on-region (point-min) (point-max)))
 
 (defun overseer-compilation-run (cmdlist buffer-name)
-  "Run CMDLIST in `buffer-name'.
-Returns the compilation buffer.
-Argument BUFFER-NAME for the compilation."
+  "Run CMDLIST in BUFFER-NAME and returns the compilation buffer."
   (save-some-buffers (not compilation-ask-about-save) overseer--save-buffers-predicate)
   (let* ((overseer--buffer-name buffer-name)
          (compilation-filter-start (point-min)))
@@ -112,7 +110,8 @@ Argument BUFFER-NAME for the compilation."
       (set (make-local-variable 'compilation-error-regexp-alist) (cons 'overseer compilation-error-regexp-alist))
       (add-hook 'compilation-filter-hook 'overseer--handle-ansi-color nil t))))
 
-(defun overseer--current-buffer-test-file-p ()
+(defun overseer-current-buffer-test-file-p ()
+  "Return t if the current buffer is a test file."
   (string-match-p "-test\.el$"
                   (file-name-nondirectory (buffer-file-name))))
 
