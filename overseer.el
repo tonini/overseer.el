@@ -42,6 +42,8 @@
   :link '(url-link :tag "Github" "https://github.com/tonini/overseer.el")
   :link '(emacs-commentary-link :tag "Commentary" "overseer"))
 
+;; Variables
+
 (defvar overseer-command "cask exec ert-runner"
   "The shell command for ert-runner.")
 
@@ -55,14 +57,35 @@
                         (split-string command)
                       command)))))
 
+(defvar overseer-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "C-c , t") 'overseer-test)
+    (define-key map (kbd "C-c , b") 'overseer-test-this-buffer)
+    (define-key map (kbd "C-c , g") 'overseer-test-tags)
+    (define-key map (kbd "C-c , p") 'overseer-test-prompt)
+    (define-key map (kbd "C-c , d") 'overseer-test-debug)
+    (define-key map (kbd "C-c , q") 'overseer-test-quiet)
+    (define-key map (kbd "C-c , v") 'overseer-test-verbose)
+    (define-key map (kbd "C-c , h") 'overseer-help)
+    map)
+  "The keymap used when `overseer-mode' is active.")
+
+(defvar overseer--buffer-name nil
+  "Used to store compilation name so recompilation works as expected.")
+(make-variable-buffer-local 'overseer--buffer-name)
+
 (defvar overseer--project-root-indicators
   '("Cask")
   "Files which indicate a root of a emacs lisp package.")
 
-(defun overseer-project-root ()
-  "Return path to the current emacs lisp package root directory."
-  (let ((file (file-name-as-directory (expand-file-name default-directory))))
-    (overseer--project-root-identifier file overseer--project-root-indicators)))
+(defvar overseer--save-buffers-predicate
+  (lambda ()
+    (not (string= (substring (buffer-name) 0 1) "*"))))
+
+;; Private functions
+
+(defun overseer--handle-ansi-color ()
+  (ansi-color-apply-on-region (point-min) (point-max)))
 
 (defun overseer--project-root-identifier (file indicators)
   (let ((root-dir (if indicators (locate-dominating-file file (car indicators)) nil)))
@@ -70,15 +93,22 @@
           (indicators (overseer--project-root-identifier file (cdr indicators)))
           (t nil))))
 
-(defvar overseer--buffer-name nil
-  "Used to store compilation name so recompilation works as expected.")
-(make-variable-buffer-local 'overseer--buffer-name)
-
 (defun overseer--kill-any-orphan-proc ()
   "Ensure any dangling buffer process is killed."
   (let ((orphan-proc (get-buffer-process (buffer-name))))
     (when orphan-proc
       (kill-process orphan-proc))))
+
+(defun overseer--test-file (filename)
+  "Run ert-runner with the current FILENAME as argument."
+  (overseer-execute (list (expand-file-name filename))))
+
+;; Public functions
+
+(defun overseer-project-root ()
+  "Return path to the current emacs lisp package root directory."
+  (let ((file (file-name-as-directory (expand-file-name default-directory))))
+    (overseer--project-root-identifier file overseer--project-root-indicators)))
 
 (define-compilation-mode overseer-buffer-mode "ert-runner"
   "Overseer compilation mode."
@@ -90,13 +120,6 @@
     (setq overseer--buffer-name overseer--buffer-name)
     (set (make-local-variable 'kill-buffer-hook)
          'overseer--kill-any-orphan-proc)))
-
-(defvar overseer--save-buffers-predicate
-  (lambda ()
-    (not (string= (substring (buffer-name) 0 1) "*"))))
-
-(defun overseer--handle-ansi-color ()
-  (ansi-color-apply-on-region (point-min) (point-max)))
 
 (defun overseer-compilation-run (cmdlist buffer-name)
   "Run CMDLIST in BUFFER-NAME and returns the compilation buffer."
@@ -132,10 +155,6 @@
       (overseer-execute (list (buffer-file-name)))
     (message (format "%s is no test file."
                      (file-name-nondirectory (buffer-file-name))))))
-
-(defun overseer--test-file (filename)
-  "Run ert-runner with the current FILENAME as argument."
-  (overseer-execute (list (expand-file-name filename))))
 
 (defun overseer-test-file (filename)
   "Run `overseer--test-file' with the FILENAME."
@@ -195,19 +214,6 @@ just return nil."
 (defun overseer-mode-hook ()
   "Hook which enables `overseer-mode'"
   (overseer-mode 1))
-
-(defvar overseer-mode-map
-  (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "C-c , t") 'overseer-test)
-    (define-key map (kbd "C-c , b") 'overseer-test-this-buffer)
-    (define-key map (kbd "C-c , g") 'overseer-test-tags)
-    (define-key map (kbd "C-c , p") 'overseer-test-prompt)
-    (define-key map (kbd "C-c , d") 'overseer-test-debug)
-    (define-key map (kbd "C-c , q") 'overseer-test-quiet)
-    (define-key map (kbd "C-c , v") 'overseer-test-verbose)
-    (define-key map (kbd "C-c , h") 'overseer-help)
-    map)
-  "The keymap used when `overseer-mode' is active.")
 
 ;;;###autoload
 (define-minor-mode overseer-mode
