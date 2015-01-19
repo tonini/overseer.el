@@ -133,7 +133,7 @@
       (set (make-local-variable 'compilation-error-regexp-alist) (cons 'overseer compilation-error-regexp-alist))
       (add-hook 'compilation-filter-hook 'overseer--handle-ansi-color nil t))))
 
-(defun overseer-current-buffer-test-file-p ()
+(defun overseer--current-buffer-test-file-p ()
   "Return t if the current buffer is a test file."
   (string-match-p "-test\.el$"
                   (file-name-nondirectory (buffer-file-name))))
