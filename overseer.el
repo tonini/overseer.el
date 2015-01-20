@@ -59,19 +59,6 @@
                         (split-string command)
                       command)))))
 
-(defvar overseer-mode-map
-  (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "C-c , t") 'overseer-test)
-    (define-key map (kbd "C-c , b") 'overseer-test-this-buffer)
-    (define-key map (kbd "C-c , g") 'overseer-test-tags)
-    (define-key map (kbd "C-c , p") 'overseer-test-prompt)
-    (define-key map (kbd "C-c , d") 'overseer-test-debug)
-    (define-key map (kbd "C-c , q") 'overseer-test-quiet)
-    (define-key map (kbd "C-c , v") 'overseer-test-verbose)
-    (define-key map (kbd "C-c , h") 'overseer-help)
-    map)
-  "The keymap used when `overseer-mode' is active.")
-
 (defvar overseer--buffer-name nil
   "Used to store compilation name so recompilation works as expected.")
 (make-variable-buffer-local 'overseer--buffer-name)
@@ -212,6 +199,19 @@ just return nil."
     (when show-version
       (message "Overseer version: %s" version))
     version))
+
+(defvar overseer-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "C-c , t") 'overseer-test)
+    (define-key map (kbd "C-c , b") 'overseer-test-this-buffer)
+    (define-key map (kbd "C-c , g") 'overseer-test-tags)
+    (define-key map (kbd "C-c , p") 'overseer-test-prompt)
+    (define-key map (kbd "C-c , d") 'overseer-test-debug)
+    (define-key map (kbd "C-c , q") 'overseer-test-quiet)
+    (define-key map (kbd "C-c , v") 'overseer-test-verbose)
+    (define-key map (kbd "C-c , h") 'overseer-help)
+    map)
+  "The keymap used when `overseer-mode' is active.")
 
 (defun overseer-mode-hook ()
   "Hook which enables `overseer-mode'."
