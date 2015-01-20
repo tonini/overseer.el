@@ -44,8 +44,10 @@
 
 ;; Variables
 
-(defvar overseer-command "cask exec ert-runner"
-  "The shell command for ert-runner.")
+(defcustom overseer-command "cask exec ert-runner"
+  "The shell command for ert-runner."
+  :type 'string
+  :group 'overseer)
 
 (defvar overseer-buffer-name "*overseer*"
   "Name of the overseer buffer.")
