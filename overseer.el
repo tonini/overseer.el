@@ -49,6 +49,8 @@
   :type 'string
   :group 'overseer)
 
+;; Private functions
+
 (defvar overseer-buffer-name "*overseer*"
   "Name of the overseer buffer.")
 
@@ -92,6 +94,11 @@
   "Run ert-runner with the current FILENAME as argument."
   (overseer-execute (list (expand-file-name filename))))
 
+(defun overseer--current-buffer-test-file-p ()
+  "Return t if the current buffer is a test file."
+  (string-match-p "-test\.el$"
+                  (file-name-nondirectory (buffer-file-name))))
+
 ;; Public functions
 
 (defun overseer-project-root ()
@@ -121,11 +128,6 @@
                            (lambda (b) overseer--buffer-name))
       (set (make-local-variable 'compilation-error-regexp-alist) (cons 'overseer compilation-error-regexp-alist))
       (add-hook 'compilation-filter-hook 'overseer--handle-ansi-color nil t))))
-
-(defun overseer--current-buffer-test-file-p ()
-  "Return t if the current buffer is a test file."
-  (string-match-p "-test\.el$"
-                  (file-name-nondirectory (buffer-file-name))))
 
 (defun overseer-test ()
   "Run ert-runner."
