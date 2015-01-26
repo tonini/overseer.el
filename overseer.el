@@ -55,7 +55,7 @@
 ;; Private functions
 
 (defun overseer--build-runner-cmdlist (command)
-  "Build the commands list for the runner."
+  "Build the arguments list for the runner with COMMAND."
   (remove "" (-flatten
               (list (if (stringp command)
                         (split-string command)
