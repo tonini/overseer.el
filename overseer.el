@@ -26,7 +26,7 @@
 
 ;;; Commentary:
 
-;; Ert-runner Integration Into Emacs
+;; Ert-runner Integration Into Emacs.
 
 ;;; Code:
 
