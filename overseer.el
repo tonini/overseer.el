@@ -49,10 +49,10 @@
   :type 'string
   :group 'overseer)
 
-;; Private functions
-
 (defvar overseer-buffer-name "*overseer*"
   "Name of the overseer buffer.")
+
+;; Private functions
 
 (defun overseer--build-runner-cmdlist (command)
   "Build the commands list for the runner."
