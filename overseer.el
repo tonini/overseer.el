@@ -52,15 +52,6 @@
 (defvar overseer-buffer-name "*overseer*"
   "Name of the overseer buffer.")
 
-;; Private functions
-
-(defun overseer--build-runner-cmdlist (command)
-  "Build the arguments list for the runner with COMMAND."
-  (remove "" (-flatten
-              (list (if (stringp command)
-                        (split-string command)
-                      command)))))
-
 (defvar overseer--buffer-name nil
   "Used to store compilation name so recompilation works as expected.")
 (make-variable-buffer-local 'overseer--buffer-name)
@@ -74,6 +65,13 @@
     (not (string= (substring (buffer-name) 0 1) "*"))))
 
 ;; Private functions
+
+(defun overseer--build-runner-cmdlist (command)
+  "Build the arguments list for the runner with COMMAND."
+  (remove "" (-flatten
+              (list (if (stringp command)
+                        (split-string command)
+                      command)))))
 
 (defun overseer--handle-ansi-color ()
   (ansi-color-apply-on-region (point-min) (point-max)))
