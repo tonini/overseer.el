@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.3.0 (2015-06-08)
+
+### Changes
+
+  * Enable Overseer mode just in emacs lisp test files `-test.el`.
+
+### Enhancements
+
+  * Add keybinding for `overseer-test-file` which prompts for test file running.
+
 ## v0.2.0 (2015-01-20)
 
 ### Enhancements
