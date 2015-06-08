@@ -75,18 +75,17 @@ You can install Overseer manually by placing it on your `load-path` and
 
 The `ert-runner` will always run in the context of the current `emacs lisp project`.
 
+The `overseer-mode` is enabled via `emacs-lisp-mode-hook` by default for emacs lisp test files. (`*-test.el`)
+
 ### Interactive Commands
 
-To use the `overseer-mode` minor mode and enable the following keybindings, you need to load the `overseer-mode` via `hook`:
-
-```el
-(add-hook 'emacs-lisp-mode-hook 'overseer-mode-hook)
-```
+The `overseer-mode` minor mode will be automaticly enable the following keybindings:
 
 Keybinding           | Description
 ---------------------|---------------
 <kbd>C-c , t</kbd>   | Runs `cask exec ert-runner`. `overseer-test`
 <kbd>C-c , b</kbd>   | Runs `cask exec ert-runner` with the current buffer file as argument. `overseer-test-this-buffer`
+<kbd>C-c , f</kbd>   | Open a prompt to run `cask exec ert-runner` with a custom file as arguments. `overseer-test-file`
 <kbd>C-c , g</kbd>   | Runs `cask exec ert-runner -t` with given tags (example: `indentation,syntax`). `overseer-test-this-buffer`
 <kbd>C-c , p</kbd>   | Open a prompt to run `cask exec ert-runner` with custom arguments. `overseer-test-prompt`
 <kbd>C-c , h</kbd>   | Runs `cask exec ert-runner --help`. `overseer-help`
