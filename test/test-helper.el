@@ -10,15 +10,15 @@
   (f-dirname (f-this-file)))
 
 (defvar overseer-sandbox-path
-  (f-expand "sandbox" overseer-test-path))
+  (file-name-as-directory (f-expand "sandbox" overseer-test-path)))
 
-(defmacro within-sandbox (&optional current &rest body)
-  "Evaluate BODY in an empty sandbox directory."
-  `(let ((default-directory
-           (f-join overseer-sandbox-path (format "%s" ,current))))
+(defmacro within-sandbox (&rest body)
+  "Evaluate BODY in an empty temporary directory."
+  `(let ((default-directory overseer-sandbox-path))
+     (when (f-dir? overseer-sandbox-path)
+       (f-delete overseer-sandbox-path :force))
      (f-mkdir overseer-sandbox-path)
-     ,@body
-     (f-delete overseer-sandbox-path :force)))
+     ,@body))
 
 (require 'overseer (f-expand "overseer" overseer-root-path))
 (require 'ert)

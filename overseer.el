@@ -94,8 +94,7 @@
 
 (defun overseer--current-buffer-test-file-p ()
   "Return t if the current buffer is a test file."
-  (string-match-p "-test\.el$"
-                  (file-name-nondirectory (buffer-file-name))))
+  (string-match "-test\.el$" (or (buffer-file-name) "")))
 
 ;; Public functions
 
@@ -204,6 +203,7 @@ just return nil."
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "C-c , t") 'overseer-test)
     (define-key map (kbd "C-c , b") 'overseer-test-this-buffer)
+    (define-key map (kbd "C-c , f") 'overseer-test-file)
     (define-key map (kbd "C-c , g") 'overseer-test-tags)
     (define-key map (kbd "C-c , p") 'overseer-test-prompt)
     (define-key map (kbd "C-c , d") 'overseer-test-debug)
@@ -212,10 +212,6 @@ just return nil."
     (define-key map (kbd "C-c , h") 'overseer-help)
     map)
   "The keymap used when `overseer-mode' is active.")
-
-(defun overseer-mode-hook ()
-  "Hook which enables `overseer-mode'."
-  (overseer-mode 1))
 
 ;;;###autoload
 (define-minor-mode overseer-mode
@@ -228,6 +224,15 @@ Key bindings:
   :group 'overseer
   :global nil
   :keymap 'overseer-mode-map)
+
+;;;###autoload
+(defun overseer-enable-mode ()
+  (if (overseer--current-buffer-test-file-p)
+      (overseer-mode)))
+
+;;;###autoload
+(dolist (hook '(emacs-lisp-mode-hook))
+  (add-hook hook 'overseer-enable-mode))
 
 (provide 'overseer)
 
