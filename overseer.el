@@ -76,6 +76,10 @@
 (defun overseer--handle-ansi-color ()
   (ansi-color-apply-on-region (point-min) (point-max)))
 
+(defun overseer--remove-header ()
+  (delete-matching-lines "\\(ert-runner finished at\\|mode: overseer-buffer\\|ert-runner started at\\)"
+                         (point-min) (point-max)))
+
 (defun overseer--project-root-identifier (file indicators)
   (let ((root-dir (if indicators (locate-dominating-file file (car indicators)) nil)))
     (cond (root-dir (f-slash (directory-file-name (expand-file-name root-dir))))
@@ -124,7 +128,8 @@
                            'overseer-buffer-mode
                            (lambda (b) overseer--buffer-name))
       (set (make-local-variable 'compilation-error-regexp-alist) (cons 'overseer compilation-error-regexp-alist))
-      (add-hook 'compilation-filter-hook 'overseer--handle-ansi-color nil t))))
+      (add-hook 'compilation-filter-hook 'overseer--handle-ansi-color nil t)
+      (add-hook 'compilation-filter-hook 'overseer--remove-header nil t))))
 
 (defun overseer-test ()
   "Run ert-runner."
