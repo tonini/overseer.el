@@ -81,18 +81,21 @@ The `overseer-mode` is enabled via `emacs-lisp-mode-hook` by default for emacs l
 
 The `overseer-mode` minor mode will be automaticly enable the following keybindings:
 
-Keybinding           | Description
----------------------|---------------
-<kbd>C-c , a</kbd>   | Runs `cask exec ert-runner`. `overseer-test`
-<kbd>C-c , t</kbd>   | Runs `cask exec ert-runner -p <test-at-point>`. `overseer-test-run-test`
-<kbd>C-c , b</kbd>   | Runs `cask exec ert-runner` with the current buffer file as argument. `overseer-test-this-buffer`
-<kbd>C-c , f</kbd>   | Open a prompt to run `cask exec ert-runner` with a custom file as arguments. `overseer-test-file`
-<kbd>C-c , g</kbd>   | Runs `cask exec ert-runner -t` with given tags (example: `indentation,syntax`). `overseer-test-this-buffer`
-<kbd>C-c , p</kbd>   | Open a prompt to run `cask exec ert-runner` with custom arguments. `overseer-test-prompt`
-<kbd>C-c , h</kbd>   | Runs `cask exec ert-runner --help`. `overseer-help`
-<kbd>C-c , d</kbd>   | Runs `cask exec ert-runner --debug`. `overseer-help`
-<kbd>C-c , v</kbd>   | Runs `cask exec ert-runner --verbose`. `overseer-help`
-<kbd>C-c , q</kbd>   | Runs `cask exec ert-runner --quiet`. `overseer-help`
+All these commands are prefixed by <kbd>C-c c</kbd>, `overseer-keymap-prefix`.
+
+Keybinding            | Description
+----------------------|---------------
+<kbd>prefix a</kbd>   | Runs `cask exec ert-runner`. `overseer-test`
+<kbd>prefix t</kbd>   | Runs `cask exec ert-runner -p <test-at-point>`. `overseer-test-run-test`
+<kbd>prefix b</kbd>   | Runs `cask exec ert-runner` with the current buffer file as argument. `overseer-test-this-buffer`
+<kbd>prefix f</kbd>   | Open a prompt to run `cask exec ert-runner` with a custom file as arguments. `overseer-test-file`
+<kbd>prefix g</kbd>   | Runs `cask exec ert-runner -t` with given tags (example: `indentation,syntax`). `overseer-test-this-buffer`
+<kbd>prefix p</kbd>   | Open a prompt to run `cask exec ert-runner` with custom arguments. `overseer-test-prompt`
+<kbd>prefix h</kbd>   | Runs `cask exec ert-runner --help`. `overseer-help`
+<kbd>prefix d</kbd>   | Runs `cask exec ert-runner --debug`. `overseer-help`
+<kbd>prefix v</kbd>   | Runs `cask exec ert-runner --verbose`. `overseer-help`
+<kbd>prefix q</kbd>   | Runs `cask exec ert-runner --quiet`. `overseer-help`
+
 
 ## Contributing
 
