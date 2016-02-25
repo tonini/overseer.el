@@ -96,6 +96,10 @@
   "Run ert-runner with the current FILENAME as argument."
   (overseer-execute (list (expand-file-name filename))))
 
+(defun overseer--test-pattern (pattern)
+  "Run ert-runner for tests matching PATTERN."
+  (overseer-execute (list "-p" pattern)))
+
 (defun overseer--current-buffer-test-file-p ()
   "Return t if the current buffer is a test file."
   (string-match "-test\.el$" (or (buffer-file-name) "")))
@@ -135,6 +139,16 @@
   "Run ert-runner."
   (interactive)
   (overseer-execute '()))
+
+(defun overseer-test-run-test ()
+  "Run ert-runner for the test at point."
+  (interactive)
+  (save-excursion
+    (beginning-of-defun)
+    (let ((function (read (current-buffer))))
+      (if (string= "ert-deftest" (car function))
+          (overseer--test-pattern (symbol-name (cadr function)))
+        (message "No test at point")))))
 
 (defun overseer-help ()
   "Run ert-runner with --help as argument."
@@ -206,7 +220,8 @@ just return nil."
 
 (defvar overseer-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "C-c , t") 'overseer-test)
+    (define-key map (kbd "C-c , a") 'overseer-test)
+    (define-key map (kbd "C-c , t") 'overseer-test-run-test)
     (define-key map (kbd "C-c , b") 'overseer-test-this-buffer)
     (define-key map (kbd "C-c , f") 'overseer-test-file)
     (define-key map (kbd "C-c , g") 'overseer-test-tags)
