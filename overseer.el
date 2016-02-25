@@ -144,6 +144,7 @@
   "Run ert-runner for the test at point."
   (interactive)
   (save-excursion
+    (end-of-defun)
     (beginning-of-defun)
     (let ((function (read (current-buffer))))
       (if (string= "ert-deftest" (car function))
