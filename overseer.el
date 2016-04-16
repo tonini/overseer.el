@@ -6,7 +6,7 @@
 
 ;; URL: http://www.github.com/tonini/overseer.el
 ;; Version: 0.3.0
-;; Package-Requires: ((emacs "24") (dash "2.10.0") (pkg-info "0.4"))
+;; Package-Requires: ((emacs "24") (dash "2.10.0") (pkg-info "0.4") (f "0.18.1"))
 ;; Keywords:
 
 ;; This file is not part of GNU Emacs.
