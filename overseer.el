@@ -32,6 +32,7 @@
 
 (require 'compile)
 (require 'dash)
+(require 'f)
 (require 'pkg-info)
 (require 'ansi-color)
 
