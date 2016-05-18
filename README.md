@@ -83,7 +83,8 @@ The `overseer-mode` minor mode will be automaticly enable the following keybindi
 
 Keybinding           | Description
 ---------------------|---------------
-<kbd>C-c , t</kbd>   | Runs `cask exec ert-runner`. `overseer-test`
+<kbd>C-c , a</kbd>   | Runs `cask exec ert-runner`. `overseer-test`
+<kbd>C-c , t</kbd>   | Runs `cask exec ert-runner -p <test-at-point>`. `overseer-test-run-test`
 <kbd>C-c , b</kbd>   | Runs `cask exec ert-runner` with the current buffer file as argument. `overseer-test-this-buffer`
 <kbd>C-c , f</kbd>   | Open a prompt to run `cask exec ert-runner` with a custom file as arguments. `overseer-test-file`
 <kbd>C-c , g</kbd>   | Runs `cask exec ert-runner -t` with given tags (example: `indentation,syntax`). `overseer-test-this-buffer`
