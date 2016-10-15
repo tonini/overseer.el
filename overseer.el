@@ -190,9 +190,18 @@
   (interactive "Mert-runner -t: ")
   (overseer-execute (list "-t" tags)))
 
+(defvar overseer--prompt-history nil
+  "List of recent prompts read from minibuffer.")
+
 (defun overseer-test-prompt (command)
   "Run ert-runner with custom arguments."
-  (interactive "Mert-runner: ")
+  (interactive
+   (list (let ((default (car-safe overseer--prompt-history)))
+           (read-string
+            (if default
+                (format "ert-runner (default \"%s\"): " default)
+              "ert-runner ")
+            nil 'overseer--prompt-history default t))))
   (overseer-execute (list command)))
 
 (defun overseer-execute (cmdlist)
