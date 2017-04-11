@@ -22,5 +22,3 @@
 
 (require 'overseer (f-expand "overseer" overseer-root-path))
 (require 'ert)
-
-(provide 'test-helper)

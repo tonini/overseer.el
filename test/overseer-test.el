@@ -25,8 +25,6 @@
 
 ;;; Code:
 
-(require 'test-helper)
-
 (ert-deftest test-root-directory/with-root-indicator ()
   (within-sandbox
    (f-touch "Cask")
