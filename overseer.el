@@ -206,9 +206,12 @@
 
 (defun overseer-execute (cmdlist)
   "Execute an ert-runner with CMDLIST as arguments."
-  (let ((default-directory (overseer-project-root)))
-    (overseer-compilation-run (overseer--build-runner-cmdlist (list overseer-command cmdlist))
-                              overseer-buffer-name)))
+  (let ((original-default-directory default-directory))
+    (unwind-protect
+        (let ((default-directory (overseer-project-root)))
+          (overseer-compilation-run (overseer--build-runner-cmdlist (list overseer-command cmdlist))
+                                    overseer-buffer-name))
+      (setq default-directory original-default-directory))))
 
 ;;;###autoload
 (defun overseer-version (&optional show-version)
