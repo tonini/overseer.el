@@ -1,4 +1,4 @@
-;;; overseer.el --- Ert-runner Integration Into Emacs
+;;; overseer.el --- Ert-runner Integration Into Emacs -*- lexical-binding: t -*-
 
 ;; Copyright © 2014-2015 Samuel Tonini
 ;;
