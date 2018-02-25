@@ -131,7 +131,7 @@
     (with-current-buffer
         (compilation-start (mapconcat 'concat cmdlist " ")
                            'overseer-buffer-mode
-                           (lambda (b) overseer--buffer-name))
+                           (lambda (_b) overseer--buffer-name))
       (set (make-local-variable 'compilation-error-regexp-alist) (cons 'overseer compilation-error-regexp-alist))
       (add-hook 'compilation-filter-hook 'overseer--handle-ansi-color nil t)
       (add-hook 'compilation-filter-hook 'overseer--remove-header nil t))))
