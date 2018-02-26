@@ -62,8 +62,7 @@
   "Files which indicate a root of a emacs lisp package.")
 
 (defvar overseer--save-buffers-predicate
-  (lambda ()
-    (not (string= (substring (buffer-name) 0 1) "*"))))
+  (lambda () (string-prefix-p "*" (buffer-name))))
 
 ;; Private functions
 
