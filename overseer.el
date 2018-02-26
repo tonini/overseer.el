@@ -109,7 +109,9 @@
 (defun overseer-project-root ()
   "Return path to the current emacs lisp package root directory."
   (let ((file (file-name-as-directory (expand-file-name default-directory))))
-    (overseer--project-root-identifier file overseer--project-root-indicators)))
+    (or
+     (overseer--project-root-identifier file overseer--project-root-indicators)
+     (user-error "Overseer unable to identify project root"))))
 
 (define-compilation-mode overseer-buffer-mode "ert-runner"
   "Overseer compilation mode."
