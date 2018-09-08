@@ -20,5 +20,9 @@
      (f-mkdir overseer-sandbox-path)
      ,@body))
 
-(require 'overseer (f-expand "overseer" overseer-root-path))
+(require 'undercover)
+(undercover "*.el"
+	    (:exclude "*-test.el")
+	    (:report-file "/tmp/undercover-report.json"))
+(require 'overseer)
 (require 'ert)

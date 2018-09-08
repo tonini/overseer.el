@@ -1,7 +1,11 @@
-[![License GPL 3][badge-license]](http://www.gnu.org/licenses/gpl-3.0.txt)
-[![Build Status](https://travis-ci.org/tonini/overseer.el.svg?branch=master)](https://travis-ci.org/tonini/overseer.el)
-
 # overseer.el
+
+[![Build Status](https://travis-ci.org/tonini/overseer.el.svg)](https://travis-ci.org/tonini/overseer.el)
+[![Coverage Status](https://coveralls.io/repos/tonini/overseer.el/badge.svg)](https://coveralls.io/r/tonini/overseer.el)
+[![MELPA](http://melpa.org/packages/overseer-badge.svg)](http://melpa.org/#/overseer)
+[![MELPA Stable](http://stable.melpa.org/packages/overseer-badge.svg)](http://stable.melpa.org/#/overseer)
+[![Tag Version](https://img.shields.io/github/tag/tonini/overseer.el.svg)](https://github.com/tonini/overseer.el/tags)
+[![License GEP 3](http://img.shields.io/:license-gpl3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0.html)
 
 > Ert-runner Integration Into Emacs
 
@@ -110,5 +114,3 @@ Copyright © 2014-2015 Samuel Tonini and
 [contributors](https://github.com/tonini/overseer.el/contributors).
 
 Distributed under the GNU General Public License, version 3
-
-[badge-license]: https://img.shields.io/badge/license-GPL_3-green.svg?style=flat
