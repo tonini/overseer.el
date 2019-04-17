@@ -238,7 +238,8 @@ just return nil."
 
 (defvar overseer-command-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "t") 'overseer-test)
+    (define-key map (kbd "a") 'overseer-test)
+    (define-key map (kbd "t") 'overseer-test-run-test)
     (define-key map (kbd "b") 'overseer-test-this-buffer)
     (define-key map (kbd "f") 'overseer-test-file)
     (define-key map (kbd "g") 'overseer-test-tags)
@@ -253,20 +254,7 @@ just return nil."
 
 (defvar overseer-mode-map
   (let ((map (make-sparse-keymap)))
-<<<<<<< 3269801dc5145d41c11599430229340e6dfa6cc6
-    (define-key map (kbd "C-c , a") 'overseer-test)
-    (define-key map (kbd "C-c , t") 'overseer-test-run-test)
-    (define-key map (kbd "C-c , b") 'overseer-test-this-buffer)
-    (define-key map (kbd "C-c , f") 'overseer-test-file)
-    (define-key map (kbd "C-c , g") 'overseer-test-tags)
-    (define-key map (kbd "C-c , p") 'overseer-test-prompt)
-    (define-key map (kbd "C-c , d") 'overseer-test-debug)
-    (define-key map (kbd "C-c , q") 'overseer-test-quiet)
-    (define-key map (kbd "C-c , v") 'overseer-test-verbose)
-    (define-key map (kbd "C-c , h") 'overseer-help)
-=======
     (define-key map overseer-keymap-prefix 'overseer-command-map)
->>>>>>> Introduce keymap prefix
     map)
   "The keymap used when `overseer-mode' is active.")
 
