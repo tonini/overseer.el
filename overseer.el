@@ -5,8 +5,10 @@
 ;; Author: Samuel Tonini <tonini.samuel@gmail.com>
 
 ;; URL: http://www.github.com/tonini/overseer.el
+
 ;; Version: 0.3.0
 ;; Package-Requires: ((emacs "24") (dash "2.10.0") (pkg-info "0.4") (f "0.18.1"))
+
 ;; Keywords:
 
 ;; This file is not part of GNU Emacs.
@@ -49,6 +51,11 @@
   "The shell command for ert-runner."
   :type 'string
   :group 'overseer)
+
+(defcustom overseer-keymap-prefix (kbd "C-c ,")
+  "Overseer keymap prefix."
+  :group 'overseer
+  :type 'string)
 
 (defvar overseer-buffer-name "*overseer*"
   "Name of the overseer buffer.")
@@ -233,18 +240,25 @@ just return nil."
       (message "Overseer version: %s" version))
     version))
 
+(defvar overseer-command-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "a") 'overseer-test)
+    (define-key map (kbd "t") 'overseer-test-run-test)
+    (define-key map (kbd "b") 'overseer-test-this-buffer)
+    (define-key map (kbd "f") 'overseer-test-file)
+    (define-key map (kbd "g") 'overseer-test-tags)
+    (define-key map (kbd "p") 'overseer-test-prompt)
+    (define-key map (kbd "d") 'overseer-test-debug)
+    (define-key map (kbd "q") 'overseer-test-quiet)
+    (define-key map (kbd "v") 'overseer-test-verbose)
+    (define-key map (kbd "h") 'overseer-help)
+    map)
+  "Keymap for Overseer commands after `overseer-keymap-prefix'.")
+(fset 'overseer-command-map overseer-command-map)
+
 (defvar overseer-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "C-c , a") 'overseer-test)
-    (define-key map (kbd "C-c , t") 'overseer-test-run-test)
-    (define-key map (kbd "C-c , b") 'overseer-test-this-buffer)
-    (define-key map (kbd "C-c , f") 'overseer-test-file)
-    (define-key map (kbd "C-c , g") 'overseer-test-tags)
-    (define-key map (kbd "C-c , p") 'overseer-test-prompt)
-    (define-key map (kbd "C-c , d") 'overseer-test-debug)
-    (define-key map (kbd "C-c , q") 'overseer-test-quiet)
-    (define-key map (kbd "C-c , v") 'overseer-test-verbose)
-    (define-key map (kbd "C-c , h") 'overseer-help)
+    (define-key map overseer-keymap-prefix 'overseer-command-map)
     map)
   "The keymap used when `overseer-mode' is active.")
 
