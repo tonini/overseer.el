@@ -137,11 +137,13 @@
       (add-hook 'compilation-filter-hook 'overseer--handle-ansi-color nil t)
       (add-hook 'compilation-filter-hook 'overseer--remove-header nil t))))
 
+;;;###autoload
 (defun overseer-test ()
   "Run ert-runner."
   (interactive)
   (overseer-execute '()))
 
+;;;###autoload
 (defun overseer-test-run-test ()
   "Run ert-runner for the test at point."
   (interactive)
@@ -158,6 +160,7 @@
   (interactive)
   (overseer-execute '("--help")))
 
+;;;###autoload
 (defun overseer-test-this-buffer ()
   "Run ert-runner with the current `buffer-file-name' as argument."
   (interactive)
@@ -166,21 +169,25 @@
     (message (format "%s is no test file."
                      (file-name-nondirectory (buffer-file-name))))))
 
+;;;###autoload
 (defun overseer-test-file (filename)
   "Run `overseer--test-file' with the FILENAME."
   (interactive "Fmix test: ")
   (overseer--test-file filename))
 
+;;;###autoload
 (defun overseer-test-debug ()
   "Run ert-runner with --debug as argument."
   (interactive)
   (overseer-execute '("--debug")))
 
+;;;###autoload
 (defun overseer-test-verbose ()
   "Run ert-runner with --verbose as argument."
   (interactive)
   (overseer-execute '("--verbose")))
 
+;;;###autoload
 (defun overseer-test-quiet ()
   "Run ert-runner with --quiet as argument."
   (interactive)
