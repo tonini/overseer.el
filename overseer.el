@@ -47,7 +47,10 @@
 
 (defcustom overseer-command "cask exec ert-runner"
   "The shell command for ert-runner."
-  :type 'string
+  :type '(radio
+          (const :tag "Run with cask exec ert-runner" "cask exec ert-runner")
+          (const :tag "Run with eask exec ert-runner" "eask exec ert-runner")
+          (string :tag "Run with custom command"))
   :group 'overseer)
 
 (defvar overseer-buffer-name "*overseer*"
